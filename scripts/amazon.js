@@ -26,7 +26,7 @@ products.forEach((product) =>{
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class = "select-option-${product.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -67,10 +67,19 @@ document.querySelectorAll('.js-add-to-cart-button').forEach((buttonElement, inde
         document.querySelectorAll('.added-to-cart').forEach((button, index2) => {
             if(index == index2){
                 button.classList.add('added-to-cart-visible');
+                setTimeout(() => {
+                  button.classList.remove('added-to-cart-visible');
+                }, 1400);
             }
         });
+        let value;
         const productId = buttonElement.dataset.productId;
-        addToCart(productId);
+        products.forEach((item, index3) => {
+          if(index == index3){
+            value = document.querySelector(`.select-option-${item.id}`).value;
+          }
+        });
+        addToCart(productId, value);
         updateCartQuantity();
     });
 });

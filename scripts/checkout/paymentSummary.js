@@ -20,6 +20,7 @@ export function renderPaymentSummary(){
     cart.forEach((item) =>{
         cartQuantity += item.productQuantity;
     });
+    document.querySelector('.return-to-home-link').innerHTML = `${cartQuantity} items`;
     let paymentHtml = `
           <div class="payment-summary-title">
             Order Summary
