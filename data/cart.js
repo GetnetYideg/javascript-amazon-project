@@ -46,6 +46,15 @@ export function removeFromCart(productId){
     cart = newCart;
     saveToStorage();
 }
+export function updateCart(){
+    cart.forEach(cartItem=>{
+        document.querySelector(`.js-update-link-${cartItem.productId}`).addEventListener('click', ()=>{
+            document.querySelector(`.js-update-link-${cartItem.productId}`).innerHtml = `
+                <input class = "update-input" type = "text" height = "50px" width = "100px">
+            `
+        })
+    })
+}
 export function updateDeliveryOption(productId, deliveryId){
     let matchingItem;
     cart.forEach((item)=>{

@@ -1,4 +1,4 @@
-import {cart, removeFromCart, updateDeliveryOption} from '../../data/cart.js'
+import {cart, removeFromCart, updateCart, updateDeliveryOption} from '../../data/cart.js'
 import {products, getProduct} from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
@@ -33,9 +33,9 @@ export function renderOrderSummary(){
                     </div>
                     <div class="product-quantity">
                     <span>
-                        Quantity: <span class="quantity-label">${cartItem.productQuantity}</span>
+                        Quantity: <span class="quantity-label js-update-link-${matchingCart.id}" data-product-id = "${matchingCart.id}">${cartItem.productQuantity}</span>
                     </span>
-                    <span class="update-quantity-link link-primary">
+                    <span class="update-quantity-link link-primary js-update-link" data-product-id = "${matchingCart.id}">
                         Update
                     </span>
                     <span class="delete-quantity-link link-primary js-delete-link" data-product-id = "${matchingCart.id}">
@@ -93,6 +93,28 @@ export function renderOrderSummary(){
             renderPaymentSummary();
             const container = document.querySelector(`.js-cart-item-container-${productId}`);
             container.remove();
+        });
+    });
+    document.querySelectorAll('.js-update-link').forEach(updateElement =>{
+        const Id = updateElement.dataset.productId;
+        updateElement.addEventListener('click', ()=>{
+            document.querySelector(`.js-update-link-${Id}`).innerHTML = `<input type="text" class = "update-input" data-product-id = "${Id}">`;
+            document.querySelector(`.js-update-link-${Id}`).classList.add(`input-link-${Id}`);
+        });
+    });
+    document.querySelectorAll('.update-input').forEach(element => {
+        const Id = element.dataset.productId;
+        element.addEventListener('keydown', ()=>{
+            if(event.key === "Enter"){
+                console.log('passed');
+                const updatedValue = element.value;
+                cart.forEach(item =>{
+                    if(Id === item.productId){
+                        item.productQuantity = Number(updatedValue);
+                    }
+                })
+                document.querySelector(`.js-update-link-${Id}`).innerHTML = `${updatedValue}`;
+            }
         });
     });
     document.querySelectorAll('.js-delivery-option').forEach((element)=>{
