@@ -95,28 +95,6 @@ export function renderOrderSummary(){
             container.remove();
         });
     });
-    document.querySelectorAll('.js-update-link').forEach(updateElement =>{
-        const Id = updateElement.dataset.productId;
-        updateElement.addEventListener('click', ()=>{
-            document.querySelector(`.js-update-link-${Id}`).innerHTML = `<input type="text" class = "update-input" data-product-id = "${Id}">`;
-            document.querySelector(`.js-update-link-${Id}`).classList.add(`input-link-${Id}`);
-        });
-    });
-    document.querySelectorAll('.update-input').forEach(element => {
-        const Id = element.dataset.productId;
-        element.addEventListener('keydown', ()=>{
-            if(event.key === "Enter"){
-                console.log('passed');
-                const updatedValue = element.value;
-                cart.forEach(item =>{
-                    if(Id === item.productId){
-                        item.productQuantity = Number(updatedValue);
-                    }
-                })
-                document.querySelector(`.js-update-link-${Id}`).innerHTML = `${updatedValue}`;
-            }
-        });
-    });
     document.querySelectorAll('.js-delivery-option').forEach((element)=>{
         element.addEventListener('click', ()=>{
             const prodId = element.dataset.productId;

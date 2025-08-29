@@ -55,14 +55,3 @@ export function updateCart(){
         })
     })
 }
-export function updateDeliveryOption(productId, deliveryId){
-    let matchingItem;
-    cart.forEach((item)=>{
-        if(productId == item.productId){
-            matchingItem = item;
-        }
-    });
-    matchingItem.deliveryOptionId = deliveryId;
-
-    saveToStorage();
-}
